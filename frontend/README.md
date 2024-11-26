@@ -10,5 +10,6 @@ Currently, two official plugins are available:
 ---
 
 TO GET STARTED:
-1. run `npm install` to install the dependencies.
-2. use `npm run dev` to build the app.
+1. Go to the `frontend` directory.
+2. run `npm install` to install the dependencies.
+3. run `npm run dev` to build the app.
