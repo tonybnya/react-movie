@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Favorites from "./pages/Favorites";
-import NotFoundPage from "./pages/NotFoundPage";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 import Footer from "./components/Footer";
+import NotFoundPage from "./pages/NotFoundPage";
 
 // Layout component for pages that include Navbar and Footer
 const Layout = ({ children }) => (
