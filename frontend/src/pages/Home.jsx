@@ -1,22 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getPopularMovies, searchMovies } from "../services/api";
 import MovieCard from "../components/MovieCard";
 import "../styles/Home.css";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const movies = [
-    { id: 1, title: "Gladiator II", release_date: "2024" },
-    { id: 2, title: "John Wick", release_date: "2022" },
-    { id: 3, title: "The Matrix", release_date: "1999" },
-    { id: 4, title: "Star Wars", release_date: "1977" },
-    { id: 5, title: "The Lord of the Rings", release_date: "2001" },
-    { id: 6, title: "Inception", release_date: "2010" },
-    { id: 7, title: "The Dark Knight", release_date: "2008" },
-    { id: 8, title: "The Avengers", release_date: "2012" },
-    { id: 9, title: "Interstellar", release_date: "2014" },
-    { id: 10, title: "The Matrix Resurrections", release_date: "2021" },
-  ];
+  useEffect(() => {
+    const loadPopularMovies = async () => {
+      try {
+        const popularMovies = await getPopularMovies();
+        setMovies(popularMovies);
+      } catch (err) {
+        console.log(err);
+        setError("Failed to fetch popular movies");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPopularMovies();
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -41,14 +47,20 @@ const Home = () => {
         </button>
       </form>
 
-      <div className="movies-grid">
-        {movies.map(
-          (movie) =>
-            movie.title.toLowerCase().includes(searchQuery.toLowerCase()) && (
-              <MovieCard key={movie.id} movie={movie} />
-            )
-        )}
-      </div>
+      {error && <div className="error-message">{error}</div>}
+
+      {loading ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <div className="movies-grid">
+          {movies.map(
+            (movie) =>
+              movie.title.toLowerCase().includes(searchQuery.toLowerCase()) && (
+                <MovieCard key={movie.id} movie={movie} />
+              )
+          )}
+        </div>
+      )}
     </div>
   );
 };
