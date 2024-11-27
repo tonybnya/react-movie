@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { MovieProvider } from "./contexts/MovieContext";
 import "./styles/App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -8,11 +9,13 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 // Layout component for pages that include Navbar and Footer
 const Layout = ({ children }) => (
-  <div>
-    <Navbar />
-    <main className="main-content">{children}</main>
-    <Footer />
-  </div>
+  <MovieProvider>
+    <div>
+      <Navbar />
+      <main className="main-content">{children}</main>
+      <Footer />
+    </div>
+  </MovieProvider>
 );
 
 const App = () => {
